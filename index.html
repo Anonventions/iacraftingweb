@@ -1,472 +1,382 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Image Generator</title>
+    <title>ItemsAdder Crafting Configurator</title>
     <style>
-:root {
-  --rotate: 132deg;
-  --container-height: 100px;
-  --container-width: 600px;
-}
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-body {
-    font-family: 'Orbitron', sans-serif;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    text-align: center;
-    overflow: hidden;
-    background: linear-gradient(-45deg, #000000, #424571, #211367, #21131F);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-
-.container {
-    max-width: 600px;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s forwards;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-h1, h2 {
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px #f1dafb, 0 0 20px #f1dafb, 0 0 30px #f1dafb;
-}
-
-h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-  color: #61dafb;
-  font-weight: bold;
-  animation: flicker 3s infinite;
-}
-
-h2 {
-  font-size: 1.5em;
-  margin-bottom: 20px;
-  color: #ffffff;
-  opacity: 0.9;
-}
-
-
-
-@keyframes fadeInDown {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#textInput {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 20px;
-    padding: 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border: 1px solid #3a3a3a;
-    background-color: #2c2c2c;
-    color: #ffffff;
-    border-radius: 10px;
-    outline: none;
-    transition: border 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);/
-}
-
-#textInput:focus {
-    border-color: #294699;
-    background-color: #0A0108;
-    color: #e0e0e0;
-    box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-
-.canvas-container {
-    width: 400px;
-    height: 150px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    text-align: center;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-}
-
-
-canvas {
-    border-radius: 4px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s 0.6s forwards;
-}
-
-button {
-    background-color: transparent; /* Make button transparent */
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: transform 0.1s;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s 0.9s forwards;
-    outline: none;
-}
-
-button:hover {
-    transform: translateY(-2px);
-}
-
-button:active {
-    transform: translateY(1px);
-}
-
-button svg {
-    transition: transform 0.2s;
-}
-
-button:hover svg {
-    transform: scale(1.1);
-}
-        .font-selector-container {
-            max-width: 600px;
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            margin-top: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(241, 218, 251, 0.7);
-            text-align: center;
-            animation: fadeInUp 0.5s forwards;
-        }
-
-        .font-selector {
+        body {
+            font-family: 'Press Start 2P', sans-serif;
             margin: 0;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #3a3a3a;
-            background-color: #2c2c2c;
-            color: #ffffff;
-            outline: none;
-            transition: border 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s;
-        }
-
-        .font-selector:hover {
-            border-color: #294699;
-            background-color: #1a1a1a;
-        }
-
-        .font-selector:focus {
-            border-color: #294699;
-            background-color: #0A0108;
-            color: #e0e0e0;
-            box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.2);
-        }
-
-#fontInput {
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.container {
-    max-width: 600px;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s forwards, glow 5s infinite;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(241, 218, 251, 0.7);
-}
-
-
-@keyframes glow {
-  50% {
-    box-shadow: 0 0 20px 10px rgba(112, 110, 127, 0.7);
-  }
-  75% {
-    box-shadow: 0 0 20px 10px rgba(112, 110, 127, 0.7);
-  }
-}
-.content-wrapper {
-    width: 200%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.container, .font-selector-container {
-    margin-bottom: 20px;
-}
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #ffffff;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInDown 0.5s 0.3s forwards;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-@keyframes flicker {
-    0%, 100% {
-        box-shadow: 0 0 10px #61dafb, 0 0 20px #61dafb, 0 0 30px #61dafb;
-    }
-    50% {
-        box-shadow: 0 0 20px #61dafb, 0 0 40px #61dafb, 0 0 60px #61dafb;
-    }
-}
-
-        .slider-container {
+            padding: 0;
+            background: url('https://wallpapers-clan.com/wp-content/uploads/2023/10/minecraft-grass-tree-desktop-wallpaper-preview.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #dcdcdc;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
 
-        .slider-label {
-            margin-right: 10px;
-            font-size: 16px;
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: rgba(40, 40, 40, 0.9);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        header {
+            background-color: #333;
+            color: #00ff00;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #444;
+        }
+
+        h1, h2 {
+            margin: 0 0 10px;
+            font-size: 1em;
+            font-family: 'Press Start 2P', sans-serif;
+            color: #00ff00;
+        }
+
+        h2 {
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        #main-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        section {
+            flex: 1 1 45%;
+            margin-bottom: 10px;
+            background-color: #333;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 8px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            font-weight: bold;
             color: #ffffff;
         }
 
-        .slider {
-            width: 300px;
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #444;
+            color: #dcdcdc;
         }
-     
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(3, 60px);
+            gap: 3px;
+            justify-content: center;
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #2b2b2b;
+            border-radius: 4px;
+        }
+
+        .grid-cell {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #3c3c3c;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            font-family: 'Press Start 2P', sans-serif;
+            color: #fff;
+        }
+
+        .grid-cell:hover {
+            background-color: #4c4c4c;
+        }
+
+        .item-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin: 5px 0;
+        }
+
+        .item {
+            padding: 5px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #444;
+            cursor: grab;
+            transition: background-color 0.3s, transform 0.3s;
+            font-size: 0.8em;
+        }
+
+        .item:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            font-weight: bold;
+            color: #dcdcdc;
+        }
+
+        #add-item {
+            margin-top: 5px;
+        }
+
+        .actions {
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Press Start 2P', sans-serif;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        #output-section {
+            padding: 10px;
+            background-color: #333;
+            border-top: 1px solid #444;
+        }
+
+        #config-output {
+            background-color: #1e1e1e;
+            border: 1px solid #444;
+            padding: 8px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-height: 120px;
+            color: #f1f1f1;
+            font-family: 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 <body>
-
-  <div class="content-wrapper">
-   <div class="container">
-               <div class="slider-container">
-        <label for="spacingInput" class="slider-label">LETTER SPACING:</label>
-        <input type="range" min="0" max="150" value="10" class="slider" id="spacingInput" oninput="updateSpacing()">
-    </div>
-    <div class="font-selector-container">
-        <label for="fontInput" class="font-selector-label">Choose a Font:</label>
-        <select id="fontInput" class="font-selector" onchange="updateFont()">
-            <option value="default">Default</option>
-            <option value="default2">Simple</option>
-            <option value="default3">Clean</option>
-            <option value="default4">Fancy</option>
-            <option value="default5">Gothic</option>
-            <option value="default6">Gothic, lowercase</option>
-            <option value="default7">New-Simple</option>
-            <option value="default8">Futuristic</option>
-          </select>
-</div>
-  <canvas id="downloadCanvas" style="display: none;"></canvas>
-    <div id="threeContainer"></div>
-    <div class="smoky-bg"></div>
-  
     <div class="container">
-        <h1>ANONVENTIONS</h1>
-        <h2>Text-Generator</h2>
-        <textarea id="textInput" placeholder="Type your text here" oninput="updatePreview()"></textarea>
-        <div class="canvas-container">
-            <canvas id="imagePreview" width="400" height="100"></canvas>
+        <header>
+            <h1>ItemsAdder Crafting Configurator</h1>
+        </header>
+        <main id="main-content">
+            <section id="config-options">
+                <h2>Configuration</h2>
+                <div class="form-group">
+                    <label for="namespace">Namespace:</label>
+                    <input type="text" id="namespace" placeholder="e.g., myitems">
+                </div>
+                <div class="form-group">
+                    <label for="recipe-key">Recipe Key:</label>
+                    <input type="text" id="recipe-key" placeholder="e.g., item_name">
+                </div>
+                <div class="form-group">
+                    <label for="permission">Permission:</label>
+                    <input type="text" id="permission" placeholder="e.g., myitems.item_name">
+                </div>
+                <div class="form-group">
+                    <label for="enabled">Enabled:</label>
+                    <select id="enabled">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+            </section>
+            <section id="crafting-section">
+                <h2>Crafting Grid</h2>
+                <div class="grid-container">
+                    <div class="grid-cell" data-row="1" data-col="1"></div>
+                    <div class="grid-cell" data-row="1" data-col="2"></div>
+                    <div class="grid-cell" data-row="1" data-col="3"></div>
+                    <div class="grid-cell" data-row="2" data-col="1"></div>
+                    <div class="grid-cell" data-row="2" data-col="2"></div>
+                    <div class="grid-cell" data-row="2" data-col="3"></div>
+                    <div class="grid-cell" data-row="3" data-col="1"></div>
+                    <div class="grid-cell" data-row="3" data-col="2"></div>
+                    <div class="grid-cell" data-row="3" data-col="3"></div>
+                </div>
+            </section>
+            <section id="items-section">
+                <h2>Available Items</h2>
+                <div class="item-list">
+                    <div class="item card" draggable="true" data-item="Example" data-letter="X">
+                        <div class="card-content">
+                            <span>Example (X)</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="add-item">
+                    <h3>Add Ingredient</h3>
+                    <div class="form-group">
+                        <input type="text" id="item-name" placeholder="Ingredient Name [e.g itemsadder:taco_shell]">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="item-letter" maxlength="1" placeholder="A">
+                    </div>
+                    <button id="add-item-button" class="btn">Add Item</button>
+                </div>
+            </section>
+            <section id="result-section">
+                <h2>Result</h2>
+                <div class="form-group">
+                    <label for="result-amount">Amount:</label>
+                    <input type="number" id="result-amount" value="1" min="1">
+                </div>
+            </section>
+        </main>
+        <div class="actions">
+            <button id="generate-config" class="btn">Generate Config</button>
         </div>
-        <button onclick="downloadImage()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="45px" height="45px">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path d="M19 9h-4V3H9v6H5l7 7 7-7zm-7 13v-6h2v6h-2zm-7-2h14v2H5z"/>
-            </svg>
-        </button>
+        <section id="output-section">
+            <h2>Generated Config</h2>
+            <pre id="config-output"></pre>
+        </section>
     </div>
     <script>
-const fonts = {
-    default: "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet/",
-    default2: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet2/",
-    default3: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet3/",
-    default4: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet4/",
-    default5: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet5/",
-    default6: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet6/",
-    default7: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet7/",
-    default8: 
-  "https://cdn.jsdelivr.net/gh/DCUGITHUBZONE/bitmap_image_to_text@main/alphabet8/"
-};
-let currentFont = 'default';
+        document.addEventListener("DOMContentLoaded", () => {
+            const gridCells = document.querySelectorAll(".grid-cell");
+            let draggedItem = null;
 
-async function loadImage(letter) {
-    const cacheKey = `${currentFont}-${letter}`;
-    if (imageCache[cacheKey]) {
-        return imageCache[cacheKey];
-    }
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error(`Failed to load image for letter: ${letter}`));
-        img.src = `${fonts[currentFont]}${letter.toLowerCase()}.png`;
-    });
-}
-      
-function updateFont() {
-    const fontInput = document.getElementById('fontInput');
-    currentFont = fontInput.value;
-    imageCache = {}; // Clear the image cache
-    updatePreview();
-}
-
-
-async function generateDownloadImage(text) {
-    const canvas = document.getElementById('downloadCanvas');
-    const ctx = canvas.getContext('2d');
-
-    let totalWidth = 0;
-    for (const letter of text) {
-        if (letter.match(/[a-zA-Z]/)) {
-            const img = await loadImage(letter);
-            totalWidth += img.width;
-        }
-    }
-
-    canvas.width = totalWidth;
-    canvas.height = 100; // Adjust as needed
-    await generateImage(text, canvas, true);
-}
-
-
-
-        let letterSpacing = 10;
-
-        function updateSpacing() {
-            const spacingInput = document.getElementById('spacingInput');
-            letterSpacing = parseInt(spacingInput.value, 10);
-            updatePreview();
-        }
-
-        async function generateImage(text, canvas, isDownload = false) {
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            let x = 0;
-
-            if (isDownload) {
-                let totalWidth = 0;
-                for (const letter of text) {
-                    if (letter === ' ') {
-                        totalWidth += letterSpacing;
-                    } else if (letter.match(/[a-zA-Z]/)) {
-                        const img = await loadImage(letter);
-                        totalWidth += img.width + letterSpacing;
-                    }
+            // Drag and drop functionality
+            document.addEventListener("dragstart", (e) => {
+                if (e.target.classList.contains("item")) {
+                    draggedItem = e.target;
                 }
-                canvas.width = totalWidth;
-                canvas.height = 100;
-            }
-
-            for (const letter of text) {
-                if (letter === ' ') {
-                    x += letterSpacing;
-                } else if (letter.match(/[a-zA-Z]/)) {
-                    const img = await loadImage(letter);
-                    if (isDownload) {
-                        ctx.drawImage(img, x, 0);
-                        x += img.width + letterSpacing;
-                    } else {
-                        const maxHeight = 20; // Adjust as needed
-                        const aspectRatio = img.width / img.height;
-                        const width = maxHeight * aspectRatio;
-                        ctx.drawImage(img, x, 0, width, maxHeight);
-                        x += width + letterSpacing;
-            }
-        }
-    }
-}
-
-
-
-const imageCache = {};
-
-async function preloadImages(text) {
-    const promises = [];
-    for (const letter of text) {
-        if (letter.match(/[a-zA-Z]/) && !imageCache[letter]) {
-            const promise = loadImage(letter).then(img => {
-                imageCache[letter] = img;
             });
-            promises.push(promise);
-        }
-    }
-    await Promise.all(promises);
-}
 
+            gridCells.forEach(cell => {
+                cell.addEventListener("dragover", (e) => {
+                    e.preventDefault();
+                });
 
-async function updatePreview() {
-    const textInput = document.getElementById('textInput');
-    const canvasContainer = document.querySelector('.canvas-container');
-    canvasContainer.classList.add('animate');
-    await preloadImages(textInput.value);
-    await generateImage(textInput.value, document.getElementById('imagePreview'));
-}
+                cell.addEventListener("drop", (e) => {
+                    e.preventDefault();
+                    if (draggedItem) {
+                        const letter = draggedItem.getAttribute("data-letter");
+                        cell.textContent = letter;
+                        cell.setAttribute("data-item", draggedItem.getAttribute("data-item"));
+                        cell.setAttribute("data-letter", letter);
+                    }
+                });
 
+                // Allow removing items from the grid by clicking
+                cell.addEventListener("click", () => {
+                    cell.textContent = "";
+                    cell.removeAttribute("data-item");
+                    cell.removeAttribute("data-letter");
+                });
+            });
 
-async function downloadImage() {
-    const textInput = document.getElementById('textInput');
-    await preloadImages(textInput.value);
-    await generateDownloadImage(textInput.value);
-    
-    const canvas = document.getElementById('downloadCanvas');
-    const image = canvas.toDataURL("image/png");
-    const link = document.createElement('a');
-    link.download = 'text-image.png';
-    link.href = image;
-    link.click();
-}
+            // Add new item
+            document.getElementById("add-item-button").addEventListener("click", () => {
+                const itemName = document.getElementById("item-name").value;
+                const itemLetter = document.getElementById("item-letter").value.toUpperCase();
 
+                if (itemName && itemLetter) {
+                    const newItem = document.createElement("div");
+                    newItem.classList.add("item", "card");
+                    newItem.setAttribute("draggable", "true");
+                    newItem.setAttribute("data-item", itemName);
+                    newItem.setAttribute("data-letter", itemLetter);
+                    newItem.innerHTML = `<div class="card-content">${itemName} (${itemLetter})</div>`;
 
+                    document.querySelector(".item-list").appendChild(newItem);
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('textInput').addEventListener('input', updatePreview);
-});
+                    document.getElementById("item-name").value = "";
+                    document.getElementById("item-letter").value = "";
+                } else {
+                    alert('Please enter both item name and letter.');
+                }
+            });
+
+            // Generate configuration
+            document.getElementById("generate-config").addEventListener("click", () => {
+                const namespace = document.getElementById("namespace").value;
+                const recipeKey = document.getElementById("recipe-key").value;
+                const permission = document.getElementById("permission").value;
+                const enabled = document.getElementById("enabled").value;
+                const resultAmount = document.getElementById("result-amount").value;
+
+                const pattern = [];
+                const ingredients = {};
+
+                for (let row = 1; row <= 3; row++) {
+                    let rowPattern = "";
+                    for (let col = 1; col <= 3; col++) {
+                        const cell = document.querySelector(`.grid-cell[data-row="${row}"][data-col="${col}"]`);
+                        const letter = cell.getAttribute("data-letter");
+                        if (letter) {
+                            rowPattern += letter;
+                            const itemName = cell.getAttribute("data-item");
+                            if (!ingredients[letter]) {
+                                ingredients[letter] = itemName;
+                            }
+                        } else {
+                            rowPattern += "X";
+                        }
+                    }
+                    pattern.push(rowPattern);
+                }
+
+                const resultItem = `${namespace}:${recipeKey}`;
+
+                const config = `info:
+  namespace: ${namespace}
+recipes:
+  crafting_table:
+    ${recipeKey}:
+      permission: ${permission}
+      enabled: ${enabled}
+      pattern:
+${pattern.map(line => `      - '${line}'`).join('\n')}
+      ingredients:
+${Object.entries(ingredients).map(([key, value]) => `        ${key}: ${value}`).join('\n')}
+      result:
+        item: ${resultItem}
+        amount: ${resultAmount}`;
+
+                document.getElementById("config-output").textContent = config;
+            });
+        });
     </script>
 </body>
 </html>
