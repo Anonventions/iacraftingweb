@@ -15,81 +15,100 @@
             background-size: cover;
             color: #dcdcdc;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: rgba(40, 40, 40, 0.9);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
+            padding: 20px;
         }
 
         header {
             background-color: #333;
             color: #00ff00;
             text-align: center;
-            padding: 10px;
-            border-bottom: 1px solid #444;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 1000px;
         }
 
-        h1, h2 {
-            margin: 0 0 10px;
-            font-size: 1em;
+        h1 {
+            margin: 0;
+            font-size: 1.5em;
             font-family: 'Press Start 2P', sans-serif;
             color: #00ff00;
         }
 
+        .main-content {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .left-column, .right-column {
+            flex: 1;
+            background-color: rgba(40, 40, 40, 0.9);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
             border-bottom: 1px solid #444;
             padding-bottom: 5px;
-            margin-bottom: 5px;
-            font-size: 0.9em;
-        }
-
-        #main-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            padding: 10px;
-            gap: 10px;
-        }
-
-        section {
-            flex: 1 1 45%;
-            margin-bottom: 10px;
-            background-color: #333;
-            border-radius: 8px;
-            padding: 10px;
         }
 
         .form-group {
-            margin-bottom: 8px;
+            position: relative;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
             font-weight: bold;
             color: #ffffff;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 5px;
+            padding: 8px;
             box-sizing: border-box;
             border: 1px solid #555;
             border-radius: 4px;
             background-color: #444;
             color: #dcdcdc;
+        }
+
+        .form-group .tooltip {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the input */
+            left: 50%;
+            margin-left: -100px; /* Use half of the width to center it */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8em;
+        }
+
+        .form-group:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
 
         .grid-container {
@@ -123,14 +142,26 @@
             background-color: #4c4c4c;
         }
 
+        .ingredients-container {
+            position: relative;
+            height: 200px;
+            overflow-y: auto;
+            padding: 5px;
+            border: 1px solid #555;
+            border-radius: 8px;
+            background-color: #2b2b2b;
+        }
+
         .item-list {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 5px;
-            margin: 5px 0;
         }
 
         .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 5px;
             border: 1px solid #555;
             border-radius: 4px;
@@ -138,6 +169,34 @@
             cursor: grab;
             transition: background-color 0.3s, transform 0.3s;
             font-size: 0.8em;
+            position: relative;
+        }
+
+        .item .item-letter {
+            width: 20px;
+            height: 20px;
+            background-color: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            margin-right: 5px;
+        }
+
+        .item .item-name {
+            display: none;
+            position: absolute;
+            left: 40px;
+            background-color: #444;
+            padding: 2px 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .item:hover .item-name {
+            display: block;
         }
 
         .item:hover {
@@ -145,22 +204,8 @@
             transform: scale(1.05);
         }
 
-        .card-content {
-            font-weight: bold;
-            color: #dcdcdc;
-        }
-
-        #add-item {
-            margin-top: 5px;
-        }
-
-        .actions {
-            text-align: center;
-            margin: 5px 0;
-        }
-
         .btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             border: none;
             border-radius: 4px;
             background-color: #4CAF50;
@@ -175,43 +220,40 @@
             background-color: #45a049;
         }
 
-        #output-section {
-            padding: 10px;
-            background-color: #333;
-            border-top: 1px solid #444;
-        }
-
         #config-output {
             background-color: #1e1e1e;
             border: 1px solid #444;
             padding: 8px;
             white-space: pre-wrap;
             overflow-x: auto;
-            max-height: 120px;
+            max-height: 150px;
             color: #f1f1f1;
             font-family: 'Courier New', Courier, monospace;
+            margin-top: 15px;
+        }
+
+        .actions {
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>ItemsAdder Crafting Configurator</h1>
-        </header>
-        <main id="main-content">
+    <header>
+        <h1>ItemsAdder Crafting Configurator</h1>
+    </header>
+    <div class="main-content">
+        <div class="left-column">
             <section id="config-options">
                 <h2>Configuration</h2>
                 <div class="form-group">
                     <label for="namespace">Namespace:</label>
                     <input type="text" id="namespace" placeholder="e.g., myitems">
+                    <span class="tooltip">Specify the namespace for the configuration.</span>
                 </div>
                 <div class="form-group">
                     <label for="recipe-key">Recipe Key:</label>
                     <input type="text" id="recipe-key" placeholder="e.g., item_name">
-                </div>
-                <div class="form-group">
-                    <label for="permission">Permission:</label>
-                    <input type="text" id="permission" placeholder="e.g., myitems.item_name">
+                    <span class="tooltip">Unique key for the recipe.</span>
                 </div>
                 <div class="form-group">
                     <label for="enabled">Enabled:</label>
@@ -219,6 +261,23 @@
                         <option value="true">True</option>
                         <option value="false">False</option>
                     </select>
+                    <span class="tooltip">Enable or disable the recipe.</span>
+                </div>
+                <div id="output-section">
+                    <h2>Generated Config</h2>
+                    <pre id="config-output"></pre>
+                </div>
+                <div class="actions">
+                    <button id="generate-config" class="btn">Generate Config</button>
+                </div>
+            </section>
+        </div>
+        <div class="right-column">
+            <section id="ingredient-location-section">
+                <h2>Ingredient Location:</h2>
+                <div class="form-group">
+                    <input type="text" id="ingredient-location" placeholder="e.g., itemsadder">
+                    <span class="tooltip">Specify the default location for ingredients. If not set, it will be empty.</span>
                 </div>
             </section>
             <section id="crafting-section">
@@ -235,19 +294,22 @@
                     <div class="grid-cell" data-row="3" data-col="3"></div>
                 </div>
             </section>
-            <section id="items-section">
+            </section>
+            <section id="items-container">
                 <h2>Available Items</h2>
-                <div class="item-list">
-                    <div class="item card" draggable="true" data-item="Example" data-letter="X">
-                        <div class="card-content">
-                            <span>Example (X)</span>
+                <div class="ingredients-container">
+                    <input type="text" id="ingredient-search" placeholder="Search Ingredients..." style="width: 100%; padding: 5px; margin-bottom: 5px;">
+                    <div class="item-list" id="item-list">
+                        <div class="item card" draggable="true" data-item="Example" data-letter="X">
+                            <div class="item-letter">X</div>
+                            <div class="item-name">Example</div>
                         </div>
                     </div>
                 </div>
                 <div id="add-item">
                     <h3>Add Ingredient</h3>
                     <div class="form-group">
-                        <input type="text" id="item-name" placeholder="Ingredient Name [e.g itemsadder:taco_shell]">
+                        <input type="text" id="item-name" placeholder="Ingredient Name [e.g., itemsadder:taco_shell]">
                     </div>
                     <div class="form-group">
                         <input type="text" id="item-letter" maxlength="1" placeholder="A">
@@ -255,21 +317,21 @@
                     <button id="add-item-button" class="btn">Add Item</button>
                 </div>
             </section>
+            <section id="upload-section">
+                <h2>Upload Ingredient JSONs:</h2>
+                <div class="form-group">
+                    <input type="file" id="json-upload" accept=".json" multiple>
+                    <span class="tooltip">Upload .json files to add ingredients. The filename determines the ingredient name.</span>
+                </div>
             <section id="result-section">
                 <h2>Result</h2>
                 <div class="form-group">
                     <label for="result-amount">Amount:</label>
                     <input type="number" id="result-amount" value="1" min="1">
+                    <span class="tooltip">Specify the amount of the resulting item.</span>
                 </div>
             </section>
-        </main>
-        <div class="actions">
-            <button id="generate-config" class="btn">Generate Config</button>
         </div>
-        <section id="output-section">
-            <h2>Generated Config</h2>
-            <pre id="config-output"></pre>
-        </section>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -306,21 +368,15 @@
                 });
             });
 
-            // Add new item
+            // Add new item manually
             document.getElementById("add-item-button").addEventListener("click", () => {
                 const itemName = document.getElementById("item-name").value;
                 const itemLetter = document.getElementById("item-letter").value.toUpperCase();
+                const location = document.getElementById("ingredient-location").value.trim();
 
                 if (itemName && itemLetter) {
-                    const newItem = document.createElement("div");
-                    newItem.classList.add("item", "card");
-                    newItem.setAttribute("draggable", "true");
-                    newItem.setAttribute("data-item", itemName);
-                    newItem.setAttribute("data-letter", itemLetter);
-                    newItem.innerHTML = `<div class="card-content">${itemName} (${itemLetter})</div>`;
-
-                    document.querySelector(".item-list").appendChild(newItem);
-
+                    const fullItemName = location ? `${location}:${itemName}` : itemName;
+                    addItemToList(fullItemName, itemLetter);
                     document.getElementById("item-name").value = "";
                     document.getElementById("item-letter").value = "";
                 } else {
@@ -328,13 +384,54 @@
                 }
             });
 
+            // Handle JSON file upload
+            document.getElementById("json-upload").addEventListener("change", (event) => {
+                const files = event.target.files;
+                const location = document.getElementById("ingredient-location").value.trim();
+                const usedLetters = new Set();
+
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const fileName = file.name.replace('.json', '');
+                        const itemLetter = generateRandomLetter(usedLetters);
+                        usedLetters.add(itemLetter);
+                        const fullItemName = location ? `${location}:${fileName}` : fileName;
+                        addItemToList(fullItemName, itemLetter);
+                    };
+                    reader.readAsText(file);
+                });
+            });
+
+            // Add item to list
+            function addItemToList(itemName, itemLetter) {
+                const newItem = document.createElement("div");
+                newItem.classList.add("item", "card");
+                newItem.setAttribute("draggable", "true");
+                newItem.setAttribute("data-item", itemName);
+                newItem.setAttribute("data-letter", itemLetter);
+                newItem.innerHTML = `<div class="item-letter">${itemLetter}</div><div class="item-name">${itemName}</div>`;
+
+                document.getElementById("item-list").appendChild(newItem);
+            }
+
+            // Generate random letter not used in the current ingredient list
+            function generateRandomLetter(usedLetters) {
+                const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                let letter;
+                do {
+                    letter = letters[Math.floor(Math.random() * letters.length)];
+                } while (usedLetters.has(letter));
+                return letter;
+            }
+
             // Generate configuration
             document.getElementById("generate-config").addEventListener("click", () => {
-                const namespace = document.getElementById("namespace").value;
-                const recipeKey = document.getElementById("recipe-key").value;
-                const permission = document.getElementById("permission").value;
+                const namespace = document.getElementById("namespace").value.trim();
+                const recipeKey = document.getElementById("recipe-key").value.trim();
                 const enabled = document.getElementById("enabled").value;
                 const resultAmount = document.getElementById("result-amount").value;
+                const location = document.getElementById("ingredient-location").value.trim();
 
                 const pattern = [];
                 const ingredients = {};
@@ -357,24 +454,41 @@
                     pattern.push(rowPattern);
                 }
 
-                const resultItem = `${namespace}:${recipeKey}`;
+                let resultItem = recipeKey;
+                if (namespace) {
+                    resultItem = `${namespace}:${recipeKey}`;
+                } else if (location) {
+                    resultItem = `${location}:${recipeKey}`;
+                }
 
-                const config = `info:
-  namespace: ${namespace}
-recipes:
-  crafting_table:
-    ${recipeKey}:
-      permission: ${permission}
-      enabled: ${enabled}
-      pattern:
-${pattern.map(line => `      - '${line}'`).join('\n')}
-      ingredients:
-${Object.entries(ingredients).map(([key, value]) => `        ${key}: ${value}`).join('\n')}
-      result:
-        item: ${resultItem}
-        amount: ${resultAmount}`;
+                const permission = `${location}.${recipeKey}`;
 
+                const configParts = [];
+                if (namespace) {
+                    configParts.push(`info:\n  namespace: ${namespace}`);
+                    configParts.push(`recipes:`);
+                }
+                configParts.push(`  crafting_table:\n    ${recipeKey}:\n      permission: ${permission}\n      enabled: ${enabled}`);
+                configParts.push(`      pattern:\n${pattern.map(line => `      - '${line}'`).join('\n')}`);
+                configParts.push(`      ingredients:\n${Object.entries(ingredients).map(([key, value]) => `        ${key}: ${value}`).join('\n')}`);
+                configParts.push(`      result:\n        item: ${resultItem}\n        amount: ${resultAmount}`);
+
+                const config = configParts.join('\n');
                 document.getElementById("config-output").textContent = config;
+            });
+
+            // Search functionality
+            document.getElementById("ingredient-search").addEventListener("input", (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const items = document.querySelectorAll('.item');
+                items.forEach(item => {
+                    const itemName = item.getAttribute('data-item').toLowerCase();
+                    if (itemName.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
             });
         });
     </script>
